@@ -2,6 +2,10 @@ package pizzaBillGenerator;
 
 public class Pizza {
 
+    public enum CrustType { THIN, THICK, STUFFED }
+    public enum Size { SMALL, MEDIUM, LARGE }
+    public enum Sauce { TOMATO, BBQ, ALFREDO }
+    
     private final int basePrice;
     private final boolean veg;
     private final int extraCheesePrice = 100;
@@ -12,9 +16,19 @@ public class Pizza {
     private boolean extraToppingsAdded = false;
     private boolean takeAway = false;
 
-    public Pizza(boolean veg) {
+    public Pizza(boolean veg, CrustType crust, Size size, Sauce sauce) {
         this.veg = veg;
         this.basePrice = veg ? 300 : 400;
+        this.crust = crust;
+        this.size = size;
+        this.sauce = sauce;
+
+        if (size == Size.SMALL) sizePrice = 0;
+        else if (size == Size.MEDIUM) sizePrice = 50;
+        else if (size == Size.LARGE) sizePrice = 100;
+
+        this.basePrice = veg ? 300 : 400;
+        this.basePrice += sizePrice;
     }
 
     public void addExtraCheese() {
